@@ -2,7 +2,6 @@ package app;
 
 import controller.CoffeeController;
 import model.CoffeeMachine;
-import model.MachineStatus;
 import service.CoffeeService;
 import ui.ConsoleUI;
 

@@ -63,4 +63,28 @@ public class CoffeeMachine {
         if (milkQuantity <= 0) return;
         this.milkLevel = Math.min(this.milkLevel + milkQuantity, MAX_LIQUID_CAPACITY);
     }
+
+    public void removeWater(int waterQuantity) {
+        if (this.waterLevel + waterQuantity <= 0) {
+            this.waterLevel = 0;
+        } else {
+            this.waterLevel = Math.min(this.waterLevel + waterQuantity, MAX_LIQUID_CAPACITY);
+        }
+    }
+
+    public void removeCoffee(int coffeeQuantity) {
+        if (coffeeQuantity + this.coffeeGrams <= 0) {
+            this.coffeeGrams = 0;
+        } else {
+            this.coffeeGrams = Math.min(this.coffeeGrams + coffeeQuantity, MAX_LIQUID_CAPACITY);
+        }
+    }
+
+    public void removeMilk(int milkQuantity) {
+        if (this.milkLevel + milkQuantity <= 0) {
+            this.milkLevel = 0;
+        } else {
+            this.milkLevel = Math.min(this.milkLevel + milkQuantity, MAX_LIQUID_CAPACITY);
+        }
+    }
 }

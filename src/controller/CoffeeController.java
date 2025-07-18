@@ -13,8 +13,8 @@ public class CoffeeController {
         this.coffeeService = coffeeService;
     }
 
-    public String makeCoffee(int drinkType) {
-         return coffeeService.makeCoffee(drinkType);
+    public void makeCoffee(int drinkType) {
+         coffeeService.makeCoffee(drinkType);
     }
 
     public boolean hasIngredients(CoffeeDrink coffeeDrink) {
@@ -25,16 +25,28 @@ public class CoffeeController {
         coffeeService.consumeResources(coffeeDrink);
     }
 
-    public void refillWater(int waterQuantity) {
-        coffeeService.refillWater(waterQuantity);
+    public void addWater(int waterQuantity) {
+        coffeeService.addWater(waterQuantity);
     }
 
-    public void refillCoffee(int coffeeQuantity) {
-        coffeeService.refillCoffee(coffeeQuantity);
+    public void addCoffee(int coffeeQuantity) {
+        coffeeService.addCoffee(coffeeQuantity);
     }
 
-    public void refillMilk(int milkQuantity) {
-        coffeeService.refillMilk(milkQuantity);
+    public void addMilk(int milkQuantity) {
+        coffeeService.addMilk(milkQuantity);
+    }
+
+    public void removeWater(int waterQuantity) {
+        coffeeService.removeWater(waterQuantity);
+    }
+
+    public void removeCoffee(int coffeeQuantity) {
+        coffeeService.removeCoffee(coffeeQuantity);
+    }
+
+    public void removeMilk(int milkQuantity) {
+        coffeeService.removeMilk(milkQuantity);
     }
 
     public void updateStatusAfterUse() {
@@ -48,6 +60,5 @@ public class CoffeeController {
     public void setMachineStatus(MachineStatus status) {
         coffeeService.setMachineStatus(status);
     }
-
 
 }

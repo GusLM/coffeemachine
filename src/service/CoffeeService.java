@@ -1,5 +1,9 @@
 package service;
 
+import exceptions.InsufficientIngredientsException;
+import exceptions.InvalidCoffeeSelectionException;
+import exceptions.MaintenanceModeActiveException;
+import exceptions.NotReadyStatusException;
 import model.CoffeeDrink;
 import model.CoffeeMachine;
 import model.MachineStatus;
@@ -23,19 +27,36 @@ public class CoffeeService {
     }
 
 
-    public String makeCoffee(int drinkType) {
-        if (coffeeMachine.getStatus() != MachineStatus.READY) {
-            return "Máquina não está pronta para uso";
+    public void makeCoffee(int drinkType) {
+        try {
+            if (coffeeMachine.getStatus() != MachineStatus.READY && coffeeMachine.getStatus() != MachineStatus.MAINTENANCE) {
+                throw new NotReadyStatusException(
+                        "The machine is not ready for use. Set the status to 'READY'."
+                );
+            }
+            if (coffeeMachine.getStatus() == MachineStatus.MAINTENANCE) {
+                throw new MaintenanceModeActiveException(
+                        "The machine is in maintenance mode."
+                );
+            }
+
+            CoffeeDrink drink = createDrink(drinkType);
+
+            if (!hasIngredients(drink)) {
+                throw new InsufficientIngredientsException(drink);
+            }
+
+            consumeResources(drink);
+            updateStatusAfterUse();
+
+            System.out.println("\nYour " + drink.getName() + " is ready!");
+
+        } catch (NotReadyStatusException
+                | MaintenanceModeActiveException
+                | InvalidCoffeeSelectionException
+                | InsufficientIngredientsException e) {
+            System.out.println("\nError: " + e.getMessage());
         }
-
-        CoffeeDrink drink = createDrink(drinkType);
-
-        if (!hasIngredients(drink)) return "Ingredientes insuficientes para " + drink.getName();
-
-        consumeResources(drink);
-        updateStatusAfterUse();
-
-        return "Seu " + drink.getName() + " está pronto!";
     }
 
     public boolean hasIngredients(CoffeeDrink drink) {
@@ -50,16 +71,28 @@ public class CoffeeService {
         coffeeMachine.setMilkQuantity(coffeeMachine.getMilkLevel() - drink.getMilkMlRequired());
     }
 
-    public void refillWater(int waterQuantity) {
+    public void addWater(int waterQuantity) {
         coffeeMachine.addWater(waterQuantity);
     }
 
-    public void refillCoffee(int coffeeQuantity) {
+    public void addCoffee(int coffeeQuantity) {
         coffeeMachine.addCoffee(coffeeQuantity);
     }
 
-    public void refillMilk(int milkQuantity) {
+    public void addMilk(int milkQuantity) {
         coffeeMachine.addMilk(milkQuantity);
+    }
+
+    public void removeWater(int waterQuantity) {
+        coffeeMachine.removeWater(waterQuantity);
+    }
+
+    public void removeCoffee(int coffeeQuantity) {
+        coffeeMachine.removeCoffee(coffeeQuantity);
+    }
+
+    public void removeMilk(int milkQuantity) {
+        coffeeMachine.removeMilk(milkQuantity);
     }
 
     // Método auxiliar para atualizar o status da máquina após o uso.
@@ -86,7 +119,7 @@ public class CoffeeService {
             case 4 -> new CoffeeDrink("Café au Lait", 100, 10, 100);
             case 5 -> new CoffeeDrink("Long Black", 150, 7, 0);
             case 6 -> new CoffeeDrink("Flat White", 30, 7, 150);
-            default -> throw new IllegalArgumentException("Unknown coffee type.");
+            default -> throw new InvalidCoffeeSelectionException("Invalid coffee type.");
         };
     }
 
@@ -101,7 +134,5 @@ public class CoffeeService {
     private int getMinCoffeeRequirement() {
         return 5; // base mínima para o tipo de café que menos utiliza gramas de café.
     }
-
-
 
 }

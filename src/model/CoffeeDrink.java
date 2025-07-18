@@ -29,46 +29,4 @@ public class CoffeeDrink {
         return coffeeGramsRequired;
     }
 
-//    public final void BlackCoffee() {
-//        name = "Black Coffee";
-//        waterMlRequired = 150;
-//        coffeeGramsRequired = 10;
-//        milkMlRequired = 0;
-//    }
-//
-//    public final void Latte() {
-//        name = "Latte";
-//        waterMlRequired = 30;
-//        coffeeGramsRequired = 7;
-//        milkMlRequired = 200;
-//    }
-//
-//    public final void Macchiato() {
-//        name = "Macchiato";
-//        waterMlRequired = 30;
-//        coffeeGramsRequired = 7;
-//        milkMlRequired = 20;
-//    }
-//
-//    public final void CafeAuLait() {
-//        name = "Café au Lait";
-//        waterMlRequired = 100;
-//        coffeeGramsRequired = 10;
-//        milkMlRequired = 100;
-//    }
-//
-//    public final void LongBlack() {
-//        name = "Long Black";
-//        waterMlRequired = 150;
-//        coffeeGramsRequired = 7;
-//        milkMlRequired = 0;
-//    }
-//
-//    public final void FlatWhite() {
-//        name = "Flat White";
-//        waterMlRequired = 30;
-//        coffeeGramsRequired = 7;
-//        milkMlRequired = 150;
-//    }
-
 }

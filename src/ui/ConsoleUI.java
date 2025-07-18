@@ -1,7 +1,6 @@
 package ui;
 
 import controller.CoffeeController;
-import model.CoffeeDrink;
 import model.MachineStatus;
 import util.validators.InputValidator;
 
@@ -18,6 +17,7 @@ public class ConsoleUI {
 
     public void run(){
         boolean running = true;
+        controller.setMachineStatus(MachineStatus.ON);
         while(running) {
             printMenu();
             int option = InputValidator.readValidInteger(sc, "\nSelect a valid option: ");
@@ -27,7 +27,7 @@ public class ConsoleUI {
                     drinkMenu();
                     break;
                 case 2:
-                    System.out.println(controller.getMachineStatus());
+                    System.out.println(controller.getMachineStatus().getStatus());
                     break;
                 case 3:
                     System.out.println("\nRecipients values:");
@@ -37,12 +37,13 @@ public class ConsoleUI {
                             controller.getMachineStatus().getCoffeeGrams(),
                             controller.getMachineStatus().getMilkLevel()
                     );
-                    refillIngredients();
-                    System.out.println("Refueling completed successfully!");
+                    System.out.println("\nEnter positive values for filling and negative values for withdrawal.");
+                    adjustIngredients();
+                    System.out.println("\nIngredient values updated successfully!");
                     break;
                 case 4:
                     controller.setMachineStatus(MachineStatus.MAINTENANCE);
-                    System.out.println("Maintenance mode activated!");
+                    System.out.println("\nMaintenance mode activated!");
                     break;
                 case 5:
                     resumeOperation();
@@ -52,28 +53,32 @@ public class ConsoleUI {
                     System.out.println("\nTurning off the machine");
                     running = false;
                     break;
-                default: throw new IllegalArgumentException("Invalid option!");
+                default:
+                    try {
+                        throw new IllegalArgumentException("\nInvalid menu option selected.");
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("\nError: " + e.getMessage());
+                    }
             }
-
 
         }
     }
 
     public void printMenu() {
-        System.out.println("\n=== Coffee Machine Menu ===");
-        System.out.println("1. Select drink type");
-        System.out.println("2. View machine status");
-        System.out.println("3. Refill ingredients");
-        System.out.println("4. Enter maintenance mode");
-        System.out.println("5. Resume operation");
-        System.out.println("6. Turn off");
-        System.out.println("\nRecipients values:");
+        System.out.println("\nMachine Status:" + controller.getMachineStatus().getStatus());
         System.out.printf(
-                "Water: %dml, Coffee: %dg, Milk: %dml.%n",
+                "Recipients values - Water: %dml, Coffee: %dg, Milk: %dml.%n",
                 controller.getMachineStatus().getWaterLevel(),
                 controller.getMachineStatus().getCoffeeGrams(),
                 controller.getMachineStatus().getMilkLevel()
         );
+        System.out.println("\n=== Coffee Machine Menu ===");
+        System.out.println("1. Select drink type");
+        System.out.println("2. View machine status");
+        System.out.println("3. Adjust ingredients");
+        System.out.println("4. Enter maintenance mode");
+        System.out.println("5. Resume operation");
+        System.out.println("6. Turn off");
     }
 
     public void drinkMenu() {
@@ -87,17 +92,31 @@ public class ConsoleUI {
 
         int option = InputValidator.readValidInteger(sc, "\nSelect a valid option: ");
 
-        String result = controller.makeCoffee(option); // Captura a resposta
-        System.out.println(result); // Exibe a resposta
+        controller.makeCoffee(option); // Captura a resposta e Exibe a resposta
+//        System.out.println(result); // Exibe a resposta
     }
 
-    public void refillIngredients() {
+    public void adjustIngredients() {
             int waterQuantity = InputValidator.readValidInteger(sc, "\nEnter the amount of water to be refilled\n");
-            controller.refillWater(waterQuantity);
+            if (waterQuantity >= 0) {
+                controller.addWater(waterQuantity);
+            } else {
+                controller.removeWater(waterQuantity);
+            }
+
             int coffeeQuantity = InputValidator.readValidInteger(sc, "\nEnter the amount of coffee to be refilled\n");
-            controller.refillCoffee(coffeeQuantity);
+            if (coffeeQuantity >= 0) {
+                controller.addCoffee(coffeeQuantity);
+            } else {
+                controller.removeCoffee(coffeeQuantity);
+            }
+
             int milkQuantity = InputValidator.readValidInteger(sc, "\nEnter the amount of milk to be refilled\n");
-            controller.refillMilk(milkQuantity);
+            if (milkQuantity >= 0) {
+                controller.addMilk(milkQuantity);
+            } else {
+                controller.removeMilk(milkQuantity);
+            }
     }
 
     public void resumeOperation() {
