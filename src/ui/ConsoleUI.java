@@ -49,6 +49,9 @@ public class ConsoleUI {
                     resumeOperation();
                     break;
                 case 6:
+                    showDrinkList();
+                    break;
+                case 7:
                     controller.setMachineStatus(MachineStatus.OFF);
                     System.out.println("\nTurning off the machine");
                     running = false;
@@ -78,7 +81,8 @@ public class ConsoleUI {
         System.out.println("3. Adjust ingredients");
         System.out.println("4. Enter maintenance mode");
         System.out.println("5. Resume operation");
-        System.out.println("6. Turn off");
+        System.out.println("6. Drink list made");
+        System.out.println("7. Turn off");
     }
 
     public void drinkMenu() {
@@ -130,6 +134,10 @@ public class ConsoleUI {
             controller.setMachineStatus(MachineStatus.INSUFFICIENT_RESOURCES);
             System.out.println("\nInsufficient Resources!");
         }
+    }
+
+    public void showDrinkList() {
+        controller.showDrinkList();
     }
 
 }

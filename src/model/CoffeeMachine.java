@@ -1,11 +1,16 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CoffeeMachine {
     private int waterLevel;
     private int coffeeGrams;
     private int milkLevel;
     private final int MAX_LIQUID_CAPACITY = 500;
     private MachineStatus status;
+
+    private List<CoffeeDrink> coffeeDrinkList = new ArrayList<>();
 
     public CoffeeMachine() {
     }
@@ -49,6 +54,10 @@ public class CoffeeMachine {
         this.status = status;
     }
 
+    public List<CoffeeDrink> getCoffeeDrinkList() {
+        return coffeeDrinkList;
+    }
+
     public void addWater(int waterQuantity) {
         if (waterQuantity <= 0) return;
         this.waterLevel = Math.min(this.waterLevel + waterQuantity, MAX_LIQUID_CAPACITY);
@@ -86,5 +95,13 @@ public class CoffeeMachine {
         } else {
             this.milkLevel = Math.min(this.milkLevel + milkQuantity, MAX_LIQUID_CAPACITY);
         }
+    }
+
+    public void addDrink(CoffeeDrink coffeeDrink) {
+        coffeeDrinkList.add(coffeeDrink);
+    }
+
+    public void removeDrink(CoffeeDrink coffeeDrink) {
+        coffeeDrinkList.remove(coffeeDrink);
     }
 }

@@ -49,6 +49,18 @@ public class CoffeeController {
         coffeeService.removeMilk(milkQuantity);
     }
 
+    public void addDrink(CoffeeDrink coffeeDrink) {
+        coffeeService.addDrink(coffeeDrink);
+    }
+
+    public void removeDrink(CoffeeDrink coffeeDrink) {
+        coffeeService.removeDrink(coffeeDrink);
+    }
+
+    public void showDrinkList() {
+        coffeeService.showDrinkList();
+    }
+
     public void updateStatusAfterUse() {
         coffeeService.updateStatusAfterUse();
     }

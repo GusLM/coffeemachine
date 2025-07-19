@@ -9,6 +9,8 @@ import model.CoffeeMachine;
 import model.MachineStatus;
 import model.MachineStatusReport;
 
+import java.util.List;
+
 public class CoffeeService {
 
     private final CoffeeMachine coffeeMachine;
@@ -47,6 +49,7 @@ public class CoffeeService {
             }
 
             consumeResources(drink);
+            addDrink(drink);
             updateStatusAfterUse();
 
             System.out.println("\nYour " + drink.getName() + " is ready!");
@@ -93,6 +96,33 @@ public class CoffeeService {
 
     public void removeMilk(int milkQuantity) {
         coffeeMachine.removeMilk(milkQuantity);
+    }
+
+    public void addDrink(CoffeeDrink coffeeDrink) {
+        coffeeMachine.addDrink(coffeeDrink);
+    }
+
+    public void removeDrink(CoffeeDrink coffeeDrink) {
+        coffeeMachine.removeDrink(coffeeDrink);
+    }
+
+    public void showDrinkList() {
+        List<CoffeeDrink> coffeeDrinkList = coffeeMachine.getCoffeeDrinkList();
+        if(coffeeDrinkList.isEmpty()) {
+            System.out.println("\nNo drinks have been made yet.");
+        } else {
+            System.out.println("\n=== Drink List ===");
+            for (int i=0; i<coffeeDrinkList.size(); i++) {
+                CoffeeDrink drink = coffeeDrinkList.get(i);
+                System.out.printf("#%d %s (Water: %dml, Coffee: %dg, Milk: %dml).%n",
+                        i + 1,
+                        drink.getName(),
+                        drink.getWaterMlRequired(),
+                        drink.getCoffeeGramsRequired(),
+                        drink.getMilkMlRequired()
+                );
+            }
+        }
     }
 
     // Método auxiliar para atualizar o status da máquina após o uso.
