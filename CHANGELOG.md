@@ -2,24 +2,37 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/)
+The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## [2.0.0] - 2025-07-17
+---
+
+## [v2.1.0] - 2025-07-19
 
 ### Added
-- Exceções personalizadas para status da máquina e seleção de café
-- Métodos para remoção de ingredientes
+- Implemented a drink history feature: the machine now stores all drinks prepared during the session.
+- Added a new menu option to display the drink history.
+- Adjusted program flow to support the new drink history functionality.
+
+---
+
+## [v2.0.0] - 2025-07-17
+
+### Added
+- Custom exceptions for machine status and coffee selection errors.
+- Methods to remove ingredients from the machine.
 
 ### Changed
-- Refatoração completa do método `makeCoffee()` para lançar exceções
-- Reestruturação das mensagens e status
+- Fully refactored the `makeCoffee()` method to throw exceptions.
+- Restructured status reporting and user messages.
 
 ### Removed
-- Código comentado obsoleto
-- Imports não utilizados
+- Obsolete commented-out code.
+- Unused import statements.
 
-## [1.0.0] - 2025-07-16
+---
+
+## [v1.0.0] - 2025-07-16
 
 ### Added
-- Primeira versão da CoffeeMachine com preparação de cafés, verificação de ingredientes e relatórios de status.
+- Initial version of the CoffeeMachine with coffee preparation, ingredient validation, and status reporting.
